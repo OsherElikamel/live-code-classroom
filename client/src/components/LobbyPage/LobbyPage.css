@@ -1,0 +1,28 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-image: url('code-background.jpg');
+    background-size: cover; /* Ensure the image covers the entire screen */
+    background-repeat: no-repeat; /* Prevent repeating */
+    background-attachment: fixed; /* Make the background fixed when scrolling */
+    background-position: center; /* Center the image */
+}
+
+.main-container{
+    height: 100vh;
+}
+
+.list-item{
+    background-color: #28343c;
+    margin-top: 3%;
+    border-radius: 6px;
+}
+
+.list-item-text{
+    color: white;
+    text-align: center;
+}
+
+.title{
+    color: white;    
+}
