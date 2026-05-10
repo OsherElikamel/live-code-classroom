@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { io, type Socket } from "socket.io-client";
+import confetti from "canvas-confetti";
 import {
   Alert,
   Box,
@@ -96,6 +97,16 @@ const CodeRoomPage = () => {
     socketRef.current?.emit("code-update", newCode);
   };
 
+  const fireConfetti = () => {
+    const end = Date.now() + 1500;
+    const frame = () => {
+      confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0, y: 0.7 } });
+      confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1, y: 0.7 } });
+      if (Date.now() < end) requestAnimationFrame(frame);
+    };
+    frame();
+  };
+
   const handleCheck = () => {
     if (!codeBlock?.solution) return;
 
@@ -103,6 +114,7 @@ const CodeRoomPage = () => {
 
     if (normalize(code) === normalize(codeBlock.solution)) {
       setSnackbar({ open: true, message: "Correct solution! Great job!", severity: "success" });
+      fireConfetti();
     } else {
       setSnackbar({ open: true, message: "Not quite right — keep trying!", severity: "error" });
     }

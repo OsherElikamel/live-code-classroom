@@ -47,6 +47,24 @@ npm install
 npm run dev
 ```
 
+## API Endpoints
+
+| Method | Path | Description |
+|--------|------|-------------|
+| `GET` | `/api/health` | Health check |
+| `GET` | `/api/codeblocks` | List all code blocks |
+| `GET` | `/api/codeblocks/:id` | Get a single code block |
+
+### Socket.IO Events
+
+| Event | Direction | Description |
+|-------|-----------|-------------|
+| `join-room` | Client → Server | Join a code block room |
+| `assign-role` | Server → Client | Receive `"mentor"` or `"student"` role |
+| `code-update` | Bidirectional | Send/receive live code changes |
+| `students-count` | Server → Client | Current number of students in the room |
+| `mentor-left` | Server → Client | Mentor disconnected, room closing |
+
 ## Environment Variables
 
 ### Backend (`backend/.env`)
