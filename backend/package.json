@@ -1,12 +1,14 @@
 {
+  "name": "live-code-classroom-backend",
   "scripts": {
-    "start": "node server.js"
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "seed": "node scripts/seed.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
-    "http": "^0.0.1-security",
     "mongoose": "^8.8.2",
     "socket.io": "^4.8.1"
   }
