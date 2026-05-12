@@ -169,15 +169,15 @@ const CodeRoomPage = () => {
       </Stack>
 
       {codeBlock?.description && (
-        <Alert severity="info" sx={{ mt: 1.5 }}>
+        <Typography variant="body2" color="text.secondary" sx={{ mt: 1, px: 0.5 }}>
           {codeBlock.description}
-        </Alert>
+        </Typography>
       )}
 
       {role === "mentor" && (
-        <Typography variant="caption" color="text.secondary" sx={{ mt: 1 }}>
+        <Alert severity="warning" variant="outlined" sx={{ mt: 1.5, py: 0 }}>
           You are the mentor — watching in read-only mode
-        </Typography>
+        </Alert>
       )}
 
       {/* Editor */}
@@ -188,7 +188,7 @@ const CodeRoomPage = () => {
           borderRadius: 1.5,
           overflow: "hidden",
           border: 2,
-          borderColor: "primary.main",
+          borderColor: role === "mentor" ? "divider" : "primary.main",
           position: "relative",
           minHeight: 0,
         }}

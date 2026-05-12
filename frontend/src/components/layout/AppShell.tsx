@@ -16,12 +16,25 @@ const AppShell = () => {
         sx={{ borderBottom: 1, borderColor: "divider" }}
       >
         <Toolbar variant="dense">
-          <TerminalIcon sx={{ mr: 1.5 }} />
+          <Box
+            sx={{
+              width: 28,
+              height: 28,
+              borderRadius: 1.5,
+              bgcolor: "rgba(255,255,255,0.15)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              mr: 1.5,
+            }}
+          >
+            <TerminalIcon sx={{ fontSize: 16 }} />
+          </Box>
           <Typography variant="subtitle1" fontWeight={600} sx={{ flexGrow: 1 }}>
             Live Code Classroom
           </Typography>
-          <IconButton color="inherit" onClick={toggle}>
-            {mode === "dark" ? <LightModeIcon /> : <DarkModeIcon />}
+          <IconButton color="inherit" onClick={toggle} aria-label="toggle theme">
+            {mode === "dark" ? <LightModeIcon fontSize="small" /> : <DarkModeIcon fontSize="small" />}
           </IconButton>
         </Toolbar>
       </AppBar>

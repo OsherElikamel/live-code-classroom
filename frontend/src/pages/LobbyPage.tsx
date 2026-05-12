@@ -12,6 +12,7 @@ import {
   Typography,
 } from "@mui/material";
 import CodeIcon from "@mui/icons-material/Code";
+import TerminalIcon from "@mui/icons-material/Terminal";
 import { fetchCodeBlocks } from "../services/codeBlocks.service";
 import type { CodeBlock } from "../types";
 
@@ -35,19 +36,47 @@ const LobbyPage = () => {
   }, []);
 
   return (
-    <Box sx={{ maxWidth: 900, mx: "auto", px: 3, py: 5 }}>
-      <Typography variant="h4" gutterBottom align="center">
-        Choose a Code Block
-      </Typography>
-      <Typography
-        variant="body1"
-        color="text.secondary"
-        align="center"
-        sx={{ mb: 4 }}
-      >
-        Select an exercise to start coding. The first person in the room becomes
-        the mentor.
-      </Typography>
+    <Box sx={{ maxWidth: 900, mx: "auto", px: { xs: 2, md: 3 }, py: 5, position: "relative", overflow: "hidden" }}>
+      <Box
+        sx={{
+          position: "absolute",
+          top: "10%",
+          left: "20%",
+          width: 260,
+          height: 260,
+          borderRadius: "50%",
+          bgcolor: "primary.main",
+          opacity: 0.05,
+          filter: "blur(80px)",
+        }}
+      />
+      <Stack alignItems="center" sx={{ mb: 4, position: "relative" }}>
+        <Box
+          sx={{
+            width: 52,
+            height: 52,
+            borderRadius: 3,
+            bgcolor: "primary.main",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            mb: 2,
+          }}
+        >
+          <TerminalIcon sx={{ color: "#fff", fontSize: 26 }} />
+        </Box>
+        <Typography variant="h4" gutterBottom align="center">
+          Choose a Code Block
+        </Typography>
+        <Typography
+          variant="body1"
+          color="text.secondary"
+          align="center"
+        >
+          Select an exercise to start coding. The first person in the room becomes
+          the mentor.
+        </Typography>
+      </Stack>
 
       {error && (
         <Alert severity="error" sx={{ mb: 3 }}>
