@@ -5,6 +5,11 @@ services:
       - "27017:27017"
     volumes:
       - mongodata:/data/db
+    healthcheck:
+      test: mongosh --eval "db.runCommand('ping').ok" --quiet
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   backend:
     build: ./backend
@@ -18,7 +23,8 @@ services:
       MONGO_URI: mongodb://mongo:27017/live-code-classroom
       ORIGIN: http://localhost:5173
     depends_on:
-      - mongo
+      mongo:
+        condition: service_healthy
 
   frontend:
     build: ./frontend
