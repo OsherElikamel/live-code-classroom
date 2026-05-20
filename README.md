@@ -16,6 +16,9 @@ A real-time coding classroom where mentors observe students solving JavaScript e
 ### Live Code Sync
 ![Student typing code](docs/student_in_code_block_plus_code_typed.png)
 
+### Correct Solution
+![Correct solution](docs/correct_solution.png)
+
 </details>
 
 ## How It Works
