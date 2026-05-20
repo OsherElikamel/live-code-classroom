@@ -2,6 +2,22 @@
 
 A real-time coding classroom where mentors observe students solving JavaScript exercises. Built with React, Express, MongoDB, Socket.IO, and Monaco Editor.
 
+![Code block lobby](docs/lobby_with_4_code_blocks.png)
+
+<details>
+<summary>More screenshots</summary>
+
+### Mentor View
+![Mentor view](docs/mentor_in_code_block.png)
+
+### Student View
+![Student view](docs/student_in_code_block.png)
+
+### Live Code Sync
+![Student typing code](docs/student_in_code_block_plus_code_typed.png)
+
+</details>
+
 ## How It Works
 
 1. A mentor creates a session by opening a code block
