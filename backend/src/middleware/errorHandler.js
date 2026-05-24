@@ -1,6 +1,6 @@
 const errorHandler = (err, _req, res, _next) => {
   const status = err.status || 500;
-  const message = err.message || "Internal server error";
+  const message = status < 500 ? err.message || "Bad request" : "Internal server error";
   res.status(status).json({ error: message });
 };
 

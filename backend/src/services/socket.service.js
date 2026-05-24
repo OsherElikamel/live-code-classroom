@@ -1,9 +1,23 @@
+const mongoose = require("mongoose");
 const CodeBlock = require("../models/CodeBlock");
 
 exports.handleJoinRoom = async (rooms, socket, roomId, io) => {
+  if (
+    !roomId ||
+    typeof roomId !== "string" ||
+    !mongoose.Types.ObjectId.isValid(roomId)
+  ) {
+    socket.emit("error", "Invalid room ID");
+    return;
+  }
+
   if (!rooms[roomId]) {
     const codeBlock = await CodeBlock.findById(roomId);
-    rooms[roomId] = { mentor: null, students: [], code: codeBlock?.initialCode || "" };
+    rooms[roomId] = {
+      mentor: null,
+      students: [],
+      code: codeBlock?.initialCode || "",
+    };
   }
 
   const room = rooms[roomId];
@@ -21,6 +35,7 @@ exports.handleJoinRoom = async (rooms, socket, roomId, io) => {
   socket.emit("code-update", room.code);
 
   socket.on("code-update", (updatedCode) => {
+    if (typeof updatedCode !== "string") return;
     room.code = updatedCode;
     io.to(roomId).emit("code-update", updatedCode);
   });

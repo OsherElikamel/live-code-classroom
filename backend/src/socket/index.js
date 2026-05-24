@@ -5,7 +5,12 @@ module.exports = (io) => {
 
   io.on("connection", (socket) => {
     socket.on("join-room", (roomId) => {
-      handleJoinRoom(rooms, socket, roomId, io);
+      if (socket._joined) return;
+      socket._joined = true;
+      handleJoinRoom(rooms, socket, roomId, io).catch((err) => {
+        console.error("Error joining room:", err.message);
+        socket.emit("error", "Failed to join room");
+      });
     });
   });
 };
