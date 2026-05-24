@@ -17,10 +17,9 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import PeopleIcon from "@mui/icons-material/People";
 import CheckCircleOutlinedIcon from "@mui/icons-material/CheckCircleOutlined";
 import CodeEditor from "../components/ui/CodeEditor";
-import { fetchCodeBlockById } from "../services/codeBlocks.service";
+import { fetchCodeBlockById, checkSolution } from "../services/codeBlocks.service";
+import api from "../services/api";
 import type { CodeBlock, Role } from "../types";
-
-const SERVER_URL = import.meta.env.VITE_SERVER_URL || "http://localhost:3001";
 
 const CodeRoomPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -42,7 +41,7 @@ const CodeRoomPage = () => {
   useEffect(() => {
     if (!id) return;
 
-    const socket = io(SERVER_URL);
+    const socket = io(api.defaults.baseURL!);
     socketRef.current = socket;
 
     socket.on("connect", () => {
@@ -107,16 +106,18 @@ const CodeRoomPage = () => {
     frame();
   };
 
-  const handleCheck = () => {
-    if (!codeBlock?.solution) return;
-
-    const normalize = (s: string) => s.trim().replace(/\s+/g, " ");
-
-    if (normalize(code) === normalize(codeBlock.solution)) {
-      setSnackbar({ open: true, message: "Correct solution! Great job!", severity: "success" });
-      fireConfetti();
-    } else {
-      setSnackbar({ open: true, message: "Not quite right — keep trying!", severity: "error" });
+  const handleCheck = async () => {
+    if (!id) return;
+    try {
+      const { data } = await checkSolution(id, code);
+      if (data.correct) {
+        setSnackbar({ open: true, message: "Correct solution! Great job!", severity: "success" });
+        fireConfetti();
+      } else {
+        setSnackbar({ open: true, message: "Not quite right — keep trying!", severity: "error" });
+      }
+    } catch {
+      setSnackbar({ open: true, message: "Failed to check solution", severity: "error" });
     }
   };
 
@@ -143,15 +144,12 @@ const CodeRoomPage = () => {
     >
       {/* Header */}
       <Stack
-        direction="row"
-        alignItems="center"
-        gap={1.5}
-        flexWrap="wrap"
+        sx={{ flexDirection: "row", alignItems: "center", gap: 1.5, flexWrap: "wrap" }}
       >
         <IconButton onClick={() => navigate("/")} size="small">
           <ArrowBackIcon />
         </IconButton>
-        <Typography variant="h6" fontWeight={700} sx={{ flex: 1, minWidth: 0 }}>
+        <Typography variant="h6" sx={{ fontWeight: 700, flex: 1, minWidth: 0 }}>
           {codeBlock?.title}
         </Typography>
         <Chip
@@ -204,7 +202,7 @@ const CodeRoomPage = () => {
 
       {/* Actions */}
       {role === "student" && (
-        <Stack direction="row" gap={1.5} sx={{ mt: 1.5 }}>
+        <Stack sx={{ flexDirection: "row", gap: 1.5, mt: 1.5 }}>
           <Button
             variant="contained"
             startIcon={<CheckCircleOutlinedIcon />}

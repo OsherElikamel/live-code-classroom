@@ -6,3 +6,6 @@ export const fetchCodeBlocks = () =>
 
 export const fetchCodeBlockById = (id: string) =>
   api.get<CodeBlock>(`/api/codeblocks/${id}`);
+
+export const checkSolution = (id: string, code: string) =>
+  api.post<{ correct: boolean }>(`/api/codeblocks/${id}/check`, { code });

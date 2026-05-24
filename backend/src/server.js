@@ -10,6 +10,7 @@ connectDB();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: { origin: config.origin, methods: ["GET", "POST"] },
+  maxHttpBufferSize: 1e6,
 });
 
 socketHandler(io);

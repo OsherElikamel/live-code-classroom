@@ -50,7 +50,7 @@ const LobbyPage = () => {
           filter: "blur(80px)",
         }}
       />
-      <Stack alignItems="center" sx={{ mb: 4, position: "relative" }}>
+      <Stack sx={{ alignItems: "center", mb: 4, position: "relative" }}>
         <Box
           sx={{
             width: 52,
@@ -63,7 +63,7 @@ const LobbyPage = () => {
             mb: 2,
           }}
         >
-          <TerminalIcon sx={{ color: "#fff", fontSize: 26 }} />
+          <TerminalIcon sx={{ color: "primary.contrastText", fontSize: 26 }} />
         </Box>
         <Typography variant="h4" gutterBottom align="center">
           Choose a Code Block
@@ -113,7 +113,7 @@ const LobbyPage = () => {
                   sx={{ height: "100%", p: 0 }}
                 >
                   <CardContent>
-                    <Stack direction="row" alignItems="center" gap={1.5} sx={{ mb: 1 }}>
+                    <Stack sx={{ flexDirection: "row", alignItems: "center", gap: 1.5, mb: 1 }}>
                       <CodeIcon sx={{ color: "primary.main" }} />
                       <Typography variant="h6">{block.title}</Typography>
                     </Stack>

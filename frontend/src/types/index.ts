@@ -3,7 +3,6 @@ export interface CodeBlock {
   title: string;
   description: string;
   initialCode: string;
-  solution: string;
 }
 
 export type Role = "mentor" | "student" | null;

@@ -30,7 +30,7 @@ const AppShell = () => {
           >
             <TerminalIcon sx={{ fontSize: 16 }} />
           </Box>
-          <Typography variant="subtitle1" fontWeight={600} sx={{ flexGrow: 1 }}>
+          <Typography variant="subtitle1" sx={{ fontWeight: 600, flexGrow: 1 }}>
             Live Code Classroom
           </Typography>
           <IconButton color="inherit" onClick={toggle} aria-label="toggle theme">

@@ -73,6 +73,7 @@ npm run dev
 | `GET` | `/api/health` | Health check |
 | `GET` | `/api/codeblocks` | List all code blocks |
 | `GET` | `/api/codeblocks/:id` | Get a single code block |
+| `POST` | `/api/codeblocks/:id/check` | Check solution (body: `{ code }`) |
 
 ### Socket.IO Events
 
