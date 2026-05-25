@@ -9,6 +9,7 @@ interface ThemeCtx {
 
 const ThemeContext = createContext<ThemeCtx>({ mode: "dark", toggle: () => {} });
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useThemeMode = () => useContext(ThemeContext);
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
