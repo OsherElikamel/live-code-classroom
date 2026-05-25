@@ -6,7 +6,7 @@ const errorHandler = require("./middleware/errorHandler");
 
 const app = express();
 
-app.use(cors({ origin: config.origin }));
+app.use(cors({ origin: config.origin, methods: ["GET", "POST"] }));
 app.use(express.json());
 
 app.get("/api/health", (_req, res) => {
