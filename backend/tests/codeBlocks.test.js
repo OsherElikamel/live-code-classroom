@@ -50,6 +50,11 @@ describe("GET /api/codeblocks/:id", () => {
     const res = await request(app).get("/api/codeblocks/000000000000000000000000");
     expect(res.status).toBe(404);
   });
+
+  it("returns 400 for a malformed id", async () => {
+    const res = await request(app).get("/api/codeblocks/not-an-id");
+    expect(res.status).toBe(400);
+  });
 });
 
 describe("POST /api/codeblocks/:id/check", () => {

@@ -73,6 +73,14 @@ const CodeRoomPage = () => {
       setStudentsCount(count);
     });
 
+    socket.on("error", (message: unknown) => {
+      setSnackbar({
+        open: true,
+        message: typeof message === "string" ? message : "Connection error",
+        severity: "error",
+      });
+    });
+
     socket.on("mentor-left", () => {
       setSnackbar({
         open: true,

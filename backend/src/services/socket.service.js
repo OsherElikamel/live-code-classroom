@@ -11,15 +11,12 @@ exports.handleJoinRoom = async (rooms, socket, roomId, io) => {
     return;
   }
 
+  // Reserve the room and assign the role synchronously — doing the
+  // check-then-create across an await lets two simultaneous joiners
+  // each become mentor (TOCTOU race).
   if (!rooms[roomId]) {
-    const codeBlock = await CodeBlock.findById(roomId);
-    rooms[roomId] = {
-      mentor: null,
-      students: [],
-      code: codeBlock?.initialCode || "",
-    };
+    rooms[roomId] = { mentor: null, students: [], code: null };
   }
-
   const room = rooms[roomId];
   const isMentor = !room.mentor;
   const role = isMentor ? "mentor" : "student";
@@ -32,12 +29,22 @@ exports.handleJoinRoom = async (rooms, socket, roomId, io) => {
 
   socket.emit("assign-role", role);
   socket.join(roomId);
+
+  if (room.code === null) {
+    const codeBlock = await CodeBlock.findById(roomId).lean();
+    // another joiner may have filled it while we awaited
+    if (room.code === null) room.code = codeBlock?.initialCode || "";
+  }
   socket.emit("code-update", room.code);
 
   socket.on("code-update", (updatedCode) => {
     if (typeof updatedCode !== "string") return;
+    // The mentor is read-only — enforce it server-side, not just in the UI.
+    if (socket.id === room.mentor) return;
     room.code = updatedCode;
-    io.to(roomId).emit("code-update", updatedCode);
+    // Exclude the sender: echoing their own keystrokes back arrives after
+    // newer local input and causes cursor jumps in the controlled editor.
+    socket.to(roomId).emit("code-update", updatedCode);
   });
 
   const updateStudentCount = () => {

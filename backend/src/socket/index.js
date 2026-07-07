@@ -5,8 +5,8 @@ module.exports = (io) => {
 
   io.on("connection", (socket) => {
     socket.on("join-room", (roomId) => {
-      if (socket._joined) return;
-      socket._joined = true;
+      if (socket.data.joined) return;
+      socket.data.joined = true;
       handleJoinRoom(rooms, socket, roomId, io).catch((err) => {
         console.error("Error joining room:", err.message);
         socket.emit("error", "Failed to join room");

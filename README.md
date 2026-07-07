@@ -66,6 +66,16 @@ npm install
 npm run dev
 ```
 
+## Design Notes & Limitations
+
+Deliberate trade-offs, sized for this project's scope:
+
+- **Broadcasts exclude the sender** — echoing a student's own keystrokes back arrives after newer local input and causes cursor jumps in the controlled editor, so `code-update` uses `socket.to(room)` rather than `io.to(room)`.
+- **Roles are enforced server-side** — the mentor's read-only mode is a server rule (mentor `code-update` events are ignored), not just a disabled editor in the UI.
+- **Room creation is race-safe** — the room entry and role assignment happen synchronously before any `await`, so two simultaneous joiners can't both become mentor.
+- **Rooms live in memory** — sessions are scoped to a single server instance and cleared on restart. Multi-instance scaling would need a shared store (Redis adapter) and sticky sessions.
+- **Sync is last-write-wins on the whole document** — no OT/CRDT. With one active student per room (the intended use), conflicts don't arise; concurrent editors would overwrite each other.
+
 ## API Endpoints
 
 | Method | Path | Description |
