@@ -11,7 +11,7 @@ exports.handleJoinRoom = async (rooms, socket, roomId, io) => {
     return;
   }
 
-  // Reserve the room and assign the role synchronously — doing the
+  // Reserve the room and assign the role synchronously. Doing the
   // check-then-create across an await lets two simultaneous joiners
   // each become mentor (TOCTOU race).
   if (!rooms[roomId]) {
@@ -39,7 +39,7 @@ exports.handleJoinRoom = async (rooms, socket, roomId, io) => {
 
   socket.on("code-update", (updatedCode) => {
     if (typeof updatedCode !== "string") return;
-    // The mentor is read-only — enforce it server-side, not just in the UI.
+    // The mentor is read-only: enforce it server-side, not just in the UI.
     if (socket.id === room.mentor) return;
     room.code = updatedCode;
     // Exclude the sender: echoing their own keystrokes back arrives after

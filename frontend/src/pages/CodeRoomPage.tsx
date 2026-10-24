@@ -135,7 +135,7 @@ const CodeRoomPage = () => {
         setSnackbar({ open: true, message: "Correct solution! Great job!", severity: "success" });
         fireConfetti();
       } else {
-        setSnackbar({ open: true, message: "Not quite right — keep trying!", severity: "error" });
+        setSnackbar({ open: true, message: "Not quite right. Keep trying!", severity: "error" });
       }
     } catch {
       setSnackbar({ open: true, message: "Failed to check solution", severity: "error" });
@@ -213,7 +213,7 @@ const CodeRoomPage = () => {
 
       {role === "mentor" && (
         <Alert severity="warning" variant="outlined" sx={{ mt: 1.5, py: 0 }}>
-          You are the mentor — watching in read-only mode
+          You are the mentor, watching in read-only mode
         </Alert>
       )}
 

@@ -5,7 +5,7 @@ import AppShell from "../components/layout/AppShell";
 import LobbyPage from "../pages/LobbyPage";
 
 // The code room pulls in the Monaco wrapper, socket.io client, and
-// confetti — split it so the lobby doesn't pay for any of that.
+// confetti, so split it off and the lobby doesn't pay for any of that.
 const CodeRoomPage = lazy(() => import("../pages/CodeRoomPage"));
 
 const pageFallback = (
